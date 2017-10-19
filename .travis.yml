@@ -1,4 +1,5 @@
 language: ruby
+cache: bundler
 install: bundle install
 script:
   - bundle exec asciidoctor-epub3 progit.asc
@@ -45,3 +46,6 @@ deploy:
     tags: true
     repo: jnavila/progit2-fr
   overwrite: true
+branches:
+  only:
+  - /^travis_[0-9]*$/
