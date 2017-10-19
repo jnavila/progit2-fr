@@ -1,7 +1,7 @@
 language: ruby
 install: bundle install
 script:
-  - bundle exec rake book:build
+  - bundle exec asciidoctor-epub3 progit.asc
 after_success: |2
   (git describe | grep -v -E 'travis_[0-9]+-') || (
   # tag if no previous tag exists
@@ -31,18 +31,20 @@ after_success: |2
   git config --global user.name "Travis CI"
   export GIT_TAG=travis_$TRAVIS_BUILD_NUMBER
   git tag $GIT_TAG -a -m "Generated tag from TravisCI for build $TRAVIS_BUILD_NUMBER"
-  git push origin master -q --tags )
+  git remote add ssh git@github.com:jnavila/progit2-fr.git
+  git push ssh master -q --tags )
 
 deploy:
   provider: releases
   api_key:
     secure: VhtlP4trqy9laonJV+l/Z7+Zjo0+jc2bNuk/PQCJgAvr0i/utcW/LKUKus8D96mm6h79PrrvLE01yWqKmgMtfULPPSh2FZEnCC9QT2gma8ytI4zxQfD+hV+3KPt5GWj+ADT6Cvk5+Ute1THmaZnDLelmvZBRGzA1qX5KKqoouSMwR09dtC2bra4aSoG6qtbcC0/xt/EMFLDqq4jrpUoC2Tajyp55IhSiYv6dxhAhcogFxg1ezL7FURAFyslePo8fEICwGasX8bm4FVKK4aQIS/SxdvPkaHr1SqYMvdwD24IUypmQyX8PYd8in7L0g7Rg96S+31oH6F2GZjZyWAFug/vBZNqE+1qmt3TPt9DpVfkD8Rhj/4cMdjbP+lrMK4b6dogtRn0mzQOdRzBEntqwYG7KHP8JX41N9B2YkqlIX5GeO2/UgRIouqkeje+7iJWF1a7v++EaahUWKgPWwdeyMhLKs4yhGZGnnlfnqnirmN9tHiQTgRJhy45jkm0udhwNv6vO4QZPfAGXHlV4tnZUTW4mwOivT5gGcNfcBFNoHeRrZlpD9g9/ZsTuXdmgV3bz2BomSn8rCcXSH6jWzO8kDr/lT9CBonik9yblqUHv4jJyW27kaUR06HRJ4W07ZhzYGCokrHLxC51ZcNpCvy1kXKhajvLpaZbS8294OopQzIU=
   file:
-    - "progit.pdf"
     - "progit.epub"
-    - "progit-kf8.epub"
   skip_cleanup: true
   on:
-    branch: master
+    tags: true
     repo: jnavila/progit2-fr
   overwrite: true
+branches:
+  only:
+    - master
