@@ -45,6 +45,3 @@ deploy:
     tags: true
     repo: jnavila/progit2-fr
   overwrite: true
-branches:
-  only:
-    - master
