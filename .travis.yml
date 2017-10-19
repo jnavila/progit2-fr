@@ -48,4 +48,5 @@ deploy:
   overwrite: true
 branches:
   only:
+  - master
   - /^travis_[0-9]*$/
