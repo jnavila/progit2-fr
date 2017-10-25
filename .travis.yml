@@ -43,7 +43,7 @@ after_success: |2
   git config --global user.name "Travis CI"
   export GIT_TAG=travis_$TRAVIS_BUILD_NUMBER
   git tag $GIT_TAG -a -m "Generated tag from TravisCI for build $TRAVIS_BUILD_NUMBER"
-  git remote add ssh git@github.com:jnavila/progit2-fr.git
+  git remote add ssh git@github.com:${TRAVIS_REPO_SLUG].git
   git push ssh master -q --tags )
 
 deploy:
@@ -57,7 +57,6 @@ deploy:
   skip_cleanup: true
   on:
     tags: true
-    repo: jnavila/progit2-fr
   overwrite: true
 branches:
   only:
